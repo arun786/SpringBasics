@@ -4,6 +4,7 @@ import com.arun.didemo.controller.ConstructorInjectedController;
 import com.arun.didemo.controller.MyController;
 import com.arun.didemo.controller.PropertyInjectedController;
 import com.arun.didemo.controller.Qualifier.ShapeController;
+import com.arun.didemo.controller.primary.ColorController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +30,8 @@ public class DiDemoApplication {
         PropertyInjectedController propertyInjectedController = run.getBean("propertyInjectedController", PropertyInjectedController.class);
         logger.info(propertyInjectedController.sayHello());
 
+        logger.info("Qualifier Demo");
+
         /**
          * Demo of  Qualifier
          */
@@ -37,6 +40,14 @@ public class DiDemoApplication {
         shapeController.getShape();
         shapeController.getRectangleShapeBasedOnType();
         shapeController.getSquareBasedOnType();
+
+        logger.info("Primary Demo");
+        /**
+         * Demo for Primary
+         */
+        ColorController colorController = run.getBean("colorController", ColorController.class);
+        colorController.getColor();
+        colorController.getPurple(); //If Qualifier is not added to the Purple bean, becoz of @Primary it will diplay red
     }
 
 }

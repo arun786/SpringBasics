@@ -140,3 +140,51 @@
             square.shape();
         }
     }
+
+## Primary
+
+    
+    public interface Color {
+        void color();
+    }
+    
+    
+    @Service
+    @Qualifier("purple")
+    public class Purple implements Color {
+        @Override
+        public void color() {
+            System.out.println("Purple");
+        }
+    }
+
+
+    @Service
+    @Primary
+    public class Red implements Color {
+        @Override
+        public void color() {
+            System.out.println("Red");
+        }
+    }
+
+
+    @Controller
+    public class ColorController {
+        private Color color;
+        private Color purple;
+    
+        @Autowired
+        public ColorController(Color color, @Qualifier("purple") Color purple) {
+            this.color = color;
+            this.purple = purple;
+        }
+    
+        public void getColor() {
+            color.color();
+        }
+    
+        public void getPurple() {
+            purple.color();
+        }
+    }
