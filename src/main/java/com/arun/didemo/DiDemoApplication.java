@@ -3,6 +3,7 @@ package com.arun.didemo;
 import com.arun.didemo.controller.ConstructorInjectedController;
 import com.arun.didemo.controller.MyController;
 import com.arun.didemo.controller.PropertyInjectedController;
+import com.arun.didemo.controller.Qualifier.ShapeController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -25,11 +26,17 @@ public class DiDemoApplication {
         System.out.println(s);
 
 
-        /**
-         * The below wont work, because the PropertyInjectController is not having Spring @Controller configuration
-         */
         PropertyInjectedController propertyInjectedController = run.getBean("propertyInjectedController", PropertyInjectedController.class);
         logger.info(propertyInjectedController.sayHello());
+
+        /**
+         * Demo of  Qualifier
+         */
+
+        ShapeController shapeController = run.getBean("shapeController", ShapeController.class);
+        shapeController.getShape();
+        shapeController.getRectangleShapeBasedOnType();
+        shapeController.getSquareBasedOnType();
     }
 
 }

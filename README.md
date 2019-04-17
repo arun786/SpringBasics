@@ -68,3 +68,75 @@
         }
     }
 
+
+## Qualifier
+
+    package com.arun.didemo.service.qualifier;
+    
+    public interface Shape {
+        void shape();
+    }
+
+    Interface has 3 implemtations 
+    
+    1. Circle
+    2. Rectangle
+    3. Square
+    
+    
+    @Service
+    @Qualifier("circle")
+    public class Circle implements Shape {
+        @Override
+        public void shape() {
+            System.out.println("Circle");
+        }
+    }
+
+    
+    @Service
+    @Qualifier("rectangle")
+    public class Rectangle implements Shape {
+        @Override
+        public void shape() {
+            System.out.println("Rectangle");
+        }
+    }
+
+    
+    @Service
+    @Qualifier("square")
+    public class Square implements Shape {
+        @Override
+        public void shape() {
+            System.out.println("Shape");
+        }
+    }
+
+
+    @Controller
+    public class ShapeController {
+    
+        private Shape shape;
+        private Shape rectangle;
+        private Shape square;
+        
+        @Autowired
+        public ShapeController(@Qualifier("circle") Shape shape, Shape rectangle, Shape square) {
+            this.shape = shape;
+            this.rectangle = rectangle;
+            this.square = square;
+        }
+        
+        public void getShape() {
+            shape.shape();
+        }
+        
+        public void getRectangleShapeBasedOnType() {
+            rectangle.shape();
+        }
+        
+        public void getSquareBasedOnType() {
+            square.shape();
+        }
+    }
