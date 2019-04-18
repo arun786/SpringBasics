@@ -237,3 +237,18 @@
     }
 
     spring.profiles.active=es
+
+## Default in Profile
+
+    
+    @Service
+    @Profile({"eg", "default"})
+    public class GermanGreetingServiceImpl implements GreetingService {
+        @Override
+        public void greeting() {
+            System.out.println("This greeting is in german");
+        }
+    }
+
+
+    If the properties file doesnt have active profiles, we can use default, this will call the default.
