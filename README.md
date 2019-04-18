@@ -69,7 +69,7 @@
     }
 
 
-## Qualifier
+## @Qualifier
 
     package com.arun.didemo.service.qualifier;
     
@@ -141,7 +141,7 @@
         }
     }
 
-## Primary
+## @Primary
 
     
     public interface Color {
@@ -188,3 +188,52 @@
             purple.color();
         }
     }
+
+## @Profile
+
+    It provides a way to segregate parts of your application configuration and make it available for certain environments
+
+    
+    public interface GreetingService {
+        void greeting();
+    }
+
+
+    @Service
+    @Primary
+    @Profile("en")
+    public class EnglishGreetingServiceImpl implements GreetingService {
+        @Override
+        public void greeting() {
+            System.out.println("This is English greeting");
+        }
+    }
+
+    
+    @Service
+    @Primary
+    @Profile("es")
+    public class SpanishGreetingServiceImpl implements GreetingService {
+        @Override
+        public void greeting() {
+            System.out.println("This is spanish greeting...");
+        }
+    }
+
+
+    @Controller
+    public class GreetingController {
+    
+        private GreetingService greetingService;
+    
+        @Autowired
+        public GreetingController(GreetingService greetingService) {
+            this.greetingService = greetingService;
+        }
+    
+        public void englishGreeting() {
+            greetingService.greeting();
+        }
+    }
+
+    spring.profiles.active=es
