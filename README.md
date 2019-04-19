@@ -339,3 +339,58 @@
             return bean;
         }
     }
+
+# Open Closed Principal
+
+    
+    public interface InsuranceClaimSurveyor {
+        boolean isValidClaim();
+    }
+
+    @Service
+    @Qualifier("health")
+    public class HealthInsuranceClaimSurveyor implements InsuranceClaimSurveyor {
+        @Override
+        public boolean isValidClaim() {
+            System.out.println("Health Insurance claim valid");
+            return true;
+        }
+    }
+
+    @Service
+    @Qualifier("vehicle")
+    public class VehicleInsuranceClaimSurveyor implements InsuranceClaimSurveyor {
+        @Override
+        public boolean isValidClaim() {
+            System.out.println("Vehicle claim validated");
+            return true;
+        }
+    }
+
+
+    @Component
+    public class ClaimApprovalManager {
+    
+        private InsuranceClaimSurveyor healthInsuranceClaimSurveyor;
+        private InsuranceClaimSurveyor vehicleInsuranceClaimSurveyor;
+    
+        @Autowired
+        public ClaimApprovalManager(InsuranceClaimSurveyor healthInsuranceClaimSurveyor, InsuranceClaimSurveyor vehicleInsuranceClaimSurveyor) {
+            this.healthInsuranceClaimSurveyor = healthInsuranceClaimSurveyor;
+            this.vehicleInsuranceClaimSurveyor = vehicleInsuranceClaimSurveyor;
+        }
+    
+        public void processHealthClaim() {
+            boolean validClaim = healthInsuranceClaimSurveyor.isValidClaim();
+            if (validClaim) {
+                System.out.println("Approved");
+            }
+        }
+    
+        public void processVehicleClaim() {
+            boolean validClaim = vehicleInsuranceClaimSurveyor.isValidClaim();
+            if (validClaim) {
+                System.out.println("Approved");
+            }
+        }
+    }

@@ -1,5 +1,6 @@
 package com.arun.didemo;
 
+import com.arun.didemo.SOLID.OpenClosedPrincipal.ClaimApprovalManager;
 import com.arun.didemo.controller.ConstructorInjectedController;
 import com.arun.didemo.controller.MyController;
 import com.arun.didemo.controller.PropertyInjectedController;
@@ -55,6 +56,14 @@ public class DiDemoApplication {
          */
         GreetingController greetingController = run.getBean("greetingController", GreetingController.class);
         greetingController.englishGreeting();
+
+        /**
+         * Open closed Principle
+         */
+
+        ClaimApprovalManager claimApprovalManager = run.getBean("claimApprovalManager", ClaimApprovalManager.class);
+        claimApprovalManager.processHealthClaim();
+        claimApprovalManager.processVehicleClaim();
     }
 
 }
