@@ -1,6 +1,7 @@
 package com.arun.didemo;
 
 import com.arun.didemo.SOLID.OpenClosedPrincipal.ClaimApprovalManager;
+import com.arun.didemo.SOLID.OpenClosedPrincipal.InsuranceClaimSurveyor;
 import com.arun.didemo.controller.ConstructorInjectedController;
 import com.arun.didemo.controller.MyController;
 import com.arun.didemo.controller.PropertyInjectedController;
@@ -62,8 +63,12 @@ public class DiDemoApplication {
          */
 
         ClaimApprovalManager claimApprovalManager = run.getBean("claimApprovalManager", ClaimApprovalManager.class);
-        claimApprovalManager.processHealthClaim();
-        claimApprovalManager.processVehicleClaim();
+        InsuranceClaimSurveyor healthInsuranceClaimSurveyor = run.getBean("healthInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
+        claimApprovalManager.processClaim(healthInsuranceClaimSurveyor);
+        System.out.println();
+        InsuranceClaimSurveyor vehicleInsuranceClaimSurveyor = run.getBean("vehicleInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
+        claimApprovalManager.processClaim(vehicleInsuranceClaimSurveyor);
+        System.out.println();
     }
 
 }
