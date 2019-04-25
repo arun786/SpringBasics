@@ -236,7 +236,11 @@
         }
     }
 
+    When you specify the below in application.properties.
+    
     spring.profiles.active=es
+    
+    the output of the controller will be as "This is spanish greeting...". 
 
 ## Default in Profile
 
@@ -340,9 +344,21 @@
         }
     }
 
+# SOLID principle of Spring framework
+
+    1. Single Responsibility Principle
+    2. Open Closed Principle
+    3. Liskov Substitution Principle
+    4. Interface Segregation Principle
+    5. Dependency Inversion Principle
+   
+# Single Responsibility Principle
+
+    A class should be doing a particular type of work, avoid using god class.
+    
 # Open Closed Principal
 
-    Open for Extension but closed for modification
+    Open for Extension but closed for modification, this can be achieved using interface.
 
     
     public interface InsuranceClaimSurveyor {
@@ -381,3 +397,105 @@
         }
     }
 
+## Liskov Substitution Principle
+    
+    Object of Parent class can be replaced with Object of Child class without any negative affects.
+    
+### Not following Liskov Substitution principle
+
+    
+    import lombok.Getter;
+    import lombok.Setter;
+    
+    /**
+     * Liskov substitution principle when not applied properly
+     */
+    @Getter
+    @Setter
+    public class TransportationDevice {
+        private String name;
+        private double speed;
+        private Engine engine;
+    
+        public void startEngine() {
+            System.out.println("Starting engine....");
+        }
+    
+        public static void main(String[] args) {
+            TransportationDevice car = new Car();
+            car.startEngine();
+    
+            TransportationDevice bicyle = new Bicycle();
+            bicyle.startEngine();
+        }
+    }
+    
+    class Car extends TransportationDevice {
+        @Override
+        public void startEngine() {
+            System.out.println("Car engine starting...");
+        }
+    }
+    
+    /**
+     * Violation of Liskov Substitution principle where we are overriding startEngine, when it method is not required at all
+     */
+    class Bicycle extends TransportationDevice {
+        @Override
+        public void startEngine() {
+            System.out.println("Do nothing");
+        }
+    }
+    
+
+### Proper adhering to Liskov Substitution principle
+
+    
+    import lombok.Getter;
+    import lombok.Setter;
+    
+    @Getter
+    @Setter
+    public class TransportationDevice_v1 {
+        private String name;
+        private double speed;
+    
+        public static void main(String[] args) {
+    
+            DeviceWithEngine hondaCar = new HondaCar("HondaCar");
+            hondaCar.startEngine();
+    
+            DeviceWithoutEngine triCycle = new Tricycle("TriCycle");
+            triCycle.startMoving();
+        }
+    }
+    
+    class DeviceWithoutEngine extends TransportationDevice_v1 {
+        public void startMoving() {
+            System.out.println(this.getName() + " Start Moving");
+        }
+    }
+    
+    @Getter
+    @Setter
+    class DeviceWithEngine extends TransportationDevice_v1 {
+        private Engine engine;
+    
+        public void startEngine() {
+            System.out.println(this.getName() + " Start Engine..");
+        }
+    }
+    
+    class HondaCar extends DeviceWithEngine {
+    
+        public HondaCar(String name) {
+            this.setName(name);
+        }
+    }
+    
+    class Tricycle extends DeviceWithoutEngine {
+    
+        public Tricycle(String name) {
+            this.setName(name);
+        }
+    }
