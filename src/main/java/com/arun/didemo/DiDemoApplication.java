@@ -8,6 +8,9 @@ import com.arun.didemo.controller.PropertyInjectedController;
 import com.arun.didemo.controller.Qualifier.ShapeController;
 import com.arun.didemo.controller.primary.ColorController;
 import com.arun.didemo.controller.profile.GreetingController;
+import com.arun.didemo.primary.Employee;
+import com.arun.didemo.primary.EmployeeConfig;
+import com.arun.didemo.primary.ManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -22,53 +25,65 @@ public class DiDemoApplication {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext run = SpringApplication.run(DiDemoApplication.class, args);
-        MyController myController = run.getBean("myController", MyController.class);
-        myController.printHello();
-
-        ConstructorInjectedController constructorInjectedController = run.getBean("constructorInjectedController", ConstructorInjectedController.class);
-        String s = constructorInjectedController.sayGreeting();
-        System.out.println(s);
-
-
-        PropertyInjectedController propertyInjectedController = run.getBean("propertyInjectedController", PropertyInjectedController.class);
-        logger.info(propertyInjectedController.sayHello());
-
-        logger.info("Qualifier Demo");
+//        MyController myController = run.getBean("myController", MyController.class);
+//        myController.printHello();
+//
+//        ConstructorInjectedController constructorInjectedController = run.getBean("constructorInjectedController", ConstructorInjectedController.class);
+//        String s = constructorInjectedController.sayGreeting();
+//        System.out.println(s);
+//
+//
+//        PropertyInjectedController propertyInjectedController = run.getBean("propertyInjectedController", PropertyInjectedController.class);
+//        logger.info(propertyInjectedController.sayHello());
+//
+//        logger.info("Qualifier Demo");
+//
+//        /**
+//         * Demo of  Qualifier
+//         */
+//
+//        ShapeController shapeController = run.getBean("shapeController", ShapeController.class);
+//        shapeController.getShape();
+//        shapeController.getRectangleShapeBasedOnType();
+//        shapeController.getSquareBasedOnType();
+//
+//        logger.info("primary Demo");
+//        /**
+//         * Demo for primary
+//         */
+//        ColorController colorController = run.getBean("colorController", ColorController.class);
+//        colorController.getColor();
+//        colorController.getPurple(); //If Qualifier is not added to the Purple bean, becoz of @primary it will diplay red
+//
+//        /**
+//         * Demo for Profile
+//         */
+//        GreetingController greetingController = run.getBean("greetingController", GreetingController.class);
+//        greetingController.englishGreeting();
+//
+//        /**
+//         * Open closed Principle
+//         */
+//
+//        ClaimApprovalManager claimApprovalManager = run.getBean("claimApprovalManager", ClaimApprovalManager.class);
+//        InsuranceClaimSurveyor healthInsuranceClaimSurveyor = run.getBean("healthInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
+//        claimApprovalManager.processClaim(healthInsuranceClaimSurveyor);
+//        System.out.println();
+//        InsuranceClaimSurveyor vehicleInsuranceClaimSurveyor = run.getBean("vehicleInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
+//        claimApprovalManager.processClaim(vehicleInsuranceClaimSurveyor);
+//        System.out.println();
 
         /**
-         * Demo of  Qualifier
+         * Use of @Primary
          */
 
-        ShapeController shapeController = run.getBean("shapeController", ShapeController.class);
-        shapeController.getShape();
-        shapeController.getRectangleShapeBasedOnType();
-        shapeController.getSquareBasedOnType();
+        EmployeeConfig employeeConfig = run.getBean("employeeConfig", EmployeeConfig.class);
+        Employee arunEmployee = employeeConfig.getArunEmployee();
+        arunEmployee.display();
 
-        logger.info("Primary Demo");
-        /**
-         * Demo for Primary
-         */
-        ColorController colorController = run.getBean("colorController", ColorController.class);
-        colorController.getColor();
-        colorController.getPurple(); //If Qualifier is not added to the Purple bean, becoz of @Primary it will diplay red
 
-        /**
-         * Demo for Profile
-         */
-        GreetingController greetingController = run.getBean("greetingController", GreetingController.class);
-        greetingController.englishGreeting();
-
-        /**
-         * Open closed Principle
-         */
-
-        ClaimApprovalManager claimApprovalManager = run.getBean("claimApprovalManager", ClaimApprovalManager.class);
-        InsuranceClaimSurveyor healthInsuranceClaimSurveyor = run.getBean("healthInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
-        claimApprovalManager.processClaim(healthInsuranceClaimSurveyor);
-        System.out.println();
-        InsuranceClaimSurveyor vehicleInsuranceClaimSurveyor = run.getBean("vehicleInsuranceClaimSurveyor", InsuranceClaimSurveyor.class);
-        claimApprovalManager.processClaim(vehicleInsuranceClaimSurveyor);
-        System.out.println();
+        ManagerService managerService = run.getBean("managerService", ManagerService.class);
+        managerService.getManagerName();
     }
 
 }

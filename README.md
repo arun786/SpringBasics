@@ -141,53 +141,117 @@
         }
     }
 
-## @Primary
+## @Primary 
+### we use @Primary to give higher preference to a bean when there are multiple beans of the same type.
+
+    Case 1 : When @Primary is used along with @Bean. we cannot use @Qualifier at the configuration phase.
+    
+    import lombok.AllArgsConstructor;
+    import lombok.Getter;
+    import lombok.Setter;
+    
+        @Getter
+        @Setter
+        @AllArgsConstructor
+        public class Employee {
+            private String name;
+        
+            public void display(){
+                System.out.println(name);
+            }
+        }
 
     
-    public interface Color {
-        void color();
-    }
-    
-    
-    @Service
-    @Qualifier("purple")
-    public class Purple implements Color {
-        @Override
-        public void color() {
-            System.out.println("Purple");
+        import org.springframework.context.annotation.Bean;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.context.annotation.Primary;
+        
+        @Configuration
+        public class EmployeeConfig {
+        
+            @Bean
+            @Primary
+            public Employee getArunEmployee() {
+                return new Employee("Arun");
+            }
+        
+            @Bean
+            public Employee getPushpaEmployee() {
+                return new Employee("Pushpa");
+            }
         }
-    }
 
-
-    @Service
-    @Primary
-    public class Red implements Color {
-        @Override
-        public void color() {
-            System.out.println("Red");
+        
+        @Service
+        public class CompanyImpl implements Company {
+        
+            private Employee employee;
+        
+            @Autowired
+            public CompanyImpl(Employee employee) {
+                this.employee = employee;
+            }
+        
+            @Override
+            public void display() {
+                employee.display();
+            }
         }
-    }
-
-
-    @Controller
-    public class ColorController {
-        private Color color;
-        private Color purple;
+        
     
-        @Autowired
-        public ColorController(Color color, @Qualifier("purple") Color purple) {
-            this.color = color;
-            this.purple = purple;
+    Case 2 : When Used directly on the bean.
+    
+        import org.springframework.context.annotation.Primary;
+        import org.springframework.stereotype.Component;
+        
+        public class PrimaryOnBean {
+        }
+        
+        
+        interface Manager {
+            String getManagerName();
+        }
+        
+        @Component
+        class GeneralManager implements Manager {
+        
+            @Override
+            public String getManagerName() {
+                return "General Manager";
+            }
+        }
+        
+        @Component
+        @Primary
+        class ProductManager implements Manager {
+        
+            @Override
+            public String getManagerName() {
+                return "Product Manager";
+            }
         }
     
-        public void getColor() {
-            color.color();
-        }
     
-        public void getPurple() {
-            purple.color();
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Service;
+        
+        @Service
+        public class ManagerService {
+            private Manager manager;
+        
+            @Autowired
+            public ManagerService(Manager manager) {
+                this.manager = manager;
+            }
+        
+            public void getManagerName() {
+        
+                System.out.println(manager.getManagerName());
+            }
+        
         }
-    }
+
+        
 
 ## @Profile
 
