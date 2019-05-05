@@ -54,6 +54,10 @@
        
        to restart jenkins
        
+       you need to run the below command
+       
+       setsebool -P httpd_can_network_connect true
+       
        once you try using jenkins on port 8080, the service will be unavailable
        
        but it will be available on port 80
