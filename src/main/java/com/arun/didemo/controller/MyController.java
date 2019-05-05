@@ -7,7 +7,7 @@ public class MyController {
 
     public String printHello() {
 
-        String helloWorld = "Hello World";
+        String helloWorld = "Hello World this is my controller";
         System.out.println(helloWorld);
         return helloWorld;
     }
