@@ -11,7 +11,7 @@ public class GreetingServiceImpl implements GreetingService {
 
     @Override
     public String sayGreeting() {
-        String hello = "Say hello to world";
+        String hello = "Say hello to world, added a new web hook";
         logger.info(hello);
 
         return hello;
