@@ -1,16 +1,6 @@
 package com.arun.didemo;
 
-import com.arun.didemo.SOLID.OpenClosedPrincipal.ClaimApprovalManager;
-import com.arun.didemo.SOLID.OpenClosedPrincipal.InsuranceClaimSurveyor;
-import com.arun.didemo.controller.ConstructorInjectedController;
-import com.arun.didemo.controller.MyController;
-import com.arun.didemo.controller.PropertyInjectedController;
-import com.arun.didemo.controller.Qualifier.ShapeController;
-import com.arun.didemo.controller.primary.ColorController;
-import com.arun.didemo.controller.profile.GreetingController;
-import com.arun.didemo.primary.Employee;
-import com.arun.didemo.primary.EmployeeConfig;
-import com.arun.didemo.primary.ManagerService;
+import com.arun.didemo.datasource.DataSourceCall;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -76,14 +66,19 @@ public class DiDemoApplication {
         /**
          * Use of @Primary
          */
+//
+//        EmployeeConfig employeeConfig = run.getBean("employeeConfig", EmployeeConfig.class);
+//        Employee arunEmployee = employeeConfig.getArunEmployee();
+//        arunEmployee.display();
+//
+//
+//        ManagerService managerService = run.getBean("managerService", ManagerService.class);
+//        managerService.getManagerName();
 
-        EmployeeConfig employeeConfig = run.getBean("employeeConfig", EmployeeConfig.class);
-        Employee arunEmployee = employeeConfig.getArunEmployee();
-        arunEmployee.display();
 
-
-        ManagerService managerService = run.getBean("managerService", ManagerService.class);
-        managerService.getManagerName();
+        DataSourceCall dataSourceCall = run.getBean("dataSourceCall", DataSourceCall.class);
+        System.out.println(dataSourceCall.getAccounts());
     }
+
 
 }
