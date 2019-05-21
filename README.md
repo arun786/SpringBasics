@@ -84,3 +84,7 @@
     cd .ssh
     
     ssh-keygen -t rsa -C 'jenkin@example.com'
+    
+## Configuration in Jenkins
+
+to be continued
